@@ -1,9 +1,23 @@
 const { Pool } = require("pg");
 
+let sslConfig = false;
+if (process.env.DB_SSL === "true") {
+  sslConfig = { rejectUnauthorized: false };
+} else if (process.env.DB_SSL === "false") {
+  sslConfig = false;
+} else if (process.env.DATABASE_URL) {
+  const url = process.env.DATABASE_URL;
+  if (url.includes("neon.tech") || url.includes("supabase") || url.includes("sslmode=require") || url.includes(".render.com")) {
+    sslConfig = { rejectUnauthorized: false };
+  } else if (url.includes("dpg-")) {
+    sslConfig = false;
+  }
+}
+
 const poolConfig = process.env.DATABASE_URL
   ? {
       connectionString: process.env.DATABASE_URL,
-      ssl: process.env.DB_SSL === "false" ? false : { rejectUnauthorized: false },
+      ssl: sslConfig,
     }
   : {
       host: process.env.DB_HOST,
