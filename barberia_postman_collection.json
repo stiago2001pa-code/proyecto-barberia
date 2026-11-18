@@ -1,0 +1,874 @@
+{
+  "info": {
+    "name": "Barberia API",
+    "description": "Colección completa de endpoints para el proyecto de Barbería.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "0. General",
+      "item": [
+        {
+          "name": "Verificar Servidor",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "0.1. Autenticación (Auth)",
+      "item": [
+        {
+          "name": "Registro de Cliente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.collectionVariables.set(\"token\", res.token);",
+                  "    console.log(\"Token guardado automáticamente en {{token}}\");",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Carlos Pérez\",\n  \"correo\": \"carlos@barberia.com\",\n  \"telefono\": \"3001234567\",\n  \"password\": \"Password123*\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/registro",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "registro"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Iniciar Sesión (Login)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.token) {",
+                  "    pm.collectionVariables.set(\"token\", res.token);",
+                  "    console.log(\"Token guardado automáticamente en {{token}}\");",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"carlos@barberia.com\",\n  \"password\": \"Password123*\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener Mi Perfil (Ruta Protegida)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/perfil",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "perfil"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Roles",
+      "item": [
+        {
+          "name": "Listar Roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener Rol por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/roles/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Rol",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Recepcionista\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Rol",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Recepcionista Senior\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/roles/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles",
+                "4"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Rol",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/roles/4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles",
+                "4"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Usuarios",
+      "item": [
+        {
+          "name": "Listar Usuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener Usuario por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Usuario (Administrador)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_rol\": 1,\n  \"nombre\": \"Juan Admin\",\n  \"correo\": \"admin@barberia.com\",\n  \"telefono\": \"3001112233\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Usuario (Barbero)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_rol\": 2,\n  \"nombre\": \"Mateo Barbero\",\n  \"correo\": \"mateo@barberia.com\",\n  \"telefono\": \"3004445566\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Usuario (Cliente)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_rol\": 3,\n  \"nombre\": \"Carlos Cliente\",\n  \"correo\": \"carlos@gmail.com\",\n  \"telefono\": \"3007778899\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Carlos Gomez Cliente\",\n  \"telefono\": \"3119998877\",\n  \"estado\": \"Activo\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "3"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "3"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Barberias",
+      "item": [
+        {
+          "name": "Listar Barberías",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/barberias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberias"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener Barbería por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/barberias/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberias",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Barbería",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_admin\": 1,\n  \"nombre\": \"Barbería Clásica VIP\",\n  \"direccion\": \"Av. Principal # 10-20\",\n  \"telefono\": \"3101234567\",\n  \"descripcion\": \"La mejor experiencia en corte tradicional y moderno\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/barberias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberias"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Barbería",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Barbería Clásica & Spa\",\n  \"direccion\": \"Av. Principal # 10-25\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/barberias/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberias",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Barbería",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/barberias/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberias",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Clientes",
+      "item": [
+        {
+          "name": "Listar Clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener Cliente por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_usuario\": 3\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Cliente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_usuario\": 3\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/clientes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Cliente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/clientes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "clientes",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Barberos",
+      "item": [
+        {
+          "name": "Listar Barberos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/barberos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Obtener Barbero por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/barberos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Barbero",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_usuario\": 2,\n  \"id_barberia\": 1,\n  \"especialidad\": \"Degradado y barba\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/barberos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Barbero",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"especialidad\": \"Cortes clásicos, barba y cejas\",\n  \"estado\": \"Disponible\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/barberos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Barbero",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/barberos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "barberos",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Servicios de Barbería",
+      "item": [
+        {
+          "name": "Listar Servicios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/servicios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "servicios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Servicio",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_barberia\": 1,\n  \"nombre\": \"Corte Clásico\",\n  \"descripcion\": \"Corte degradado con lavado y peinado\",\n  \"precio\": 25000,\n  \"duracion_minutos\": 45\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/servicios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "servicios"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Horarios",
+      "item": [
+        {
+          "name": "Listar Horarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/horarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "horarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Horario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_barberia\": 1,\n  \"dia_semana\": \"Lunes\",\n  \"hora_apertura\": \"08:00:00\",\n  \"hora_cierre\": \"20:00:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/horarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "horarios"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Citas",
+      "item": [
+        {
+          "name": "Listar Citas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/citas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "citas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear Cita",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_barberia\": 1,\n  \"id_cliente\": 1,\n  \"id_barbero\": 1,\n  \"id_servicio\": 1,\n  \"fecha\": \"2026-10-25\",\n  \"hora\": \"14:30:00\",\n  \"observaciones\": \"Corte degradado bajo\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/citas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "citas"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  }
+}
